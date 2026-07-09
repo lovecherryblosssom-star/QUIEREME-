@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiéreme — una obsesión hermosa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="ether" id="ether"></div>
+
+<nav>
+  <div class="logo">Quiéreme</div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Inicio</a></li>
+    <li><a href="collections.html">Colecciones</a></li>
+    <li><a href="about.html">Nuestra Historia</a></li>
+  </ul>
+  <button id="cart-toggle">Bag (<span id="cart-count">0</span>)</button>
+</nav>
+
+<header class="hero" id="hero">
+  <div class="hero-content-wrap" id="hero-parallax">
+    <div class="hero-stack">
+      <div class="line">UNA</div>
+      <div class="line">OBSESIÓN<span class="hero-script">hermosa</span></div>
+    </div>
+    <p class="hero-tagline">catorce fragancias — the scent journal of Quiéreme</p>
+    <div class="hero-bottle"><img src="assets/hero-bottle.png" alt="Quiéreme perfume bottle"></div>
+    <a href="collections.html" class="hero-cta">Explorar todas</a>
+  </div>
+</header>
+
+<section class="elixir-section reveal">
+  <h2>Elige tu Elixir</h2>
+  <p class="sub">Four moods. Tap a card to step inside.</p>
+  <div class="card-stack" id="card-stack"></div>
+</section>
+
+<footer>Quiéreme &mdash; una obsesión hermosa &mdash; four collections, fourteen stories</footer>
+
+<div class="cart-drawer" id="cart-drawer">
+  <button class="cart-drawer-close" id="close-cart">&times;</button>
+  <h3>Your Bag</h3>
+  <div id="cart-items"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
