@@ -1,149 +1,487 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiéreme — The House</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
-<style>
-:root{--black:#050505;--ivory:#F5F1EA;--gold:#C9A45C;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--ivory);font-family:var(--sans);font-weight:300;overflow-x:hidden;cursor:none;}
-a{color:inherit;text-decoration:none;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiéreme — The House</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Inter:wght@200;300;400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --black: #050505;
+      --ivory: #F5F1EA;
+      --gold: #C9A45C;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --ease: cubic-bezier(.16, 1, .3, 1);
+    }
 
-/* CURSOR */
-#csr{position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%);}
-#csr-ring{width:28px;height:28px;border:.5px solid rgba(201,164,92,.5);border-radius:50%;transition:transform .5s var(--ease),opacity .4s;}
-#csr-dot{position:absolute;width:4px;height:4px;background:var(--gold);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);}
-body:has(a:hover) #csr-ring{transform:scale(2.1);opacity:.25;}
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:center;justify-content:space-between;padding:2rem 4.5rem;transition:padding .4s,background .4s;background:rgba(5,5,5,.97);border-bottom:.5px solid rgba(201,164,92,.1);}
-.nav-logo{font-family:var(--serif);font-weight:300;font-size:.95rem;letter-spacing:.45em;background:linear-gradient(135deg,#f0d880 0%,#c9a45c 40%,#a07030 70%,#d4b56a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.nav-mid{display:flex;gap:2.5rem;list-style:none;}
-.nav-mid a{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,241,234,.65);transition:color .35s;}
-.nav-mid a:hover,.nav-mid a.active{color:var(--gold);}
-@media(max-width:768px){.nav-mid{display:none;}nav{padding:1.4rem 1.6rem;}}
+    html {
+      scroll-behavior: smooth;
+    }
 
-/* HERO */
-.about-hero{min-height:60vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 4.5rem 6rem;position:relative;overflow:hidden;background:linear-gradient(180deg,#050505 0%,#0e0a06 50%,#120e08 80%,#0a0806 100%);}
-.about-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 20% 80%,rgba(180,140,40,.12) 0%,transparent 65%),radial-gradient(ellipse 40% 50% at 80% 20%,rgba(90,16,32,.15) 0%,transparent 60%);pointer-events:none;}
-.about-hero-tag{font-size:.62rem;letter-spacing:.55em;text-transform:uppercase;color:rgba(201,164,92,.72);margin-bottom:2rem;position:relative;}
-.about-hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(4rem,10vw,9rem);line-height:.88;letter-spacing:.04em;background:linear-gradient(160deg,#ffffff 0%,#f5f0e8 30%,#f0e090 55%,#c9a45c 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;}
-.about-hero-sub{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:rgba(245,241,234,.45);margin-top:1.5rem;letter-spacing:.06em;position:relative;}
+    body {
+      background: var(--black);
+      color: var(--ivory);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
 
-/* SECTIONS */
-.about-body{max-width:780px;margin:0 auto;padding:8rem 4.5rem 4rem;}
-.about-section{margin-bottom:7rem;}
-.about-section-label{font-size:.62rem;letter-spacing:.55em;text-transform:uppercase;color:rgba(201,164,92,.75);display:block;margin-bottom:2.5rem;}
-.about-text{font-family:var(--serif);font-weight:300;font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.75;color:rgba(245,241,234,.82);}
-.about-text p{margin-bottom:1.5em;}
-.about-text p:last-child{margin-bottom:0;}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-/* PLACEHOLDER STYLING */
-.placeholder{font-family:var(--sans);font-weight:300;font-size:.88rem;letter-spacing:.04em;line-height:1.8;color:rgba(201,164,92,.35);border:.5px dashed rgba(201,164,92,.2);padding:2rem 2.5rem;border-radius:0;}
-.placeholder strong{color:rgba(201,164,92,.6);display:block;margin-bottom:.8rem;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;font-weight:300;}
+    /* CURSOR */
+    #csr {
+      position: fixed;
+      z-index: 9999;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+    }
 
-/* PHILOSOPHY QUOTE */
-.about-philosophy{border-left:1px solid rgba(201,164,92,.35);padding-left:2rem;margin-bottom:2rem;}
-.about-philosophy blockquote{font-family:var(--serif);font-style:italic;font-size:clamp(1.8rem,4vw,3rem);line-height:1.3;background:linear-gradient(135deg,#f5e090 0%,#c9a45c 45%,#8c6020 80%,#d4b56a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.about-philosophy cite{display:block;font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(245,241,234,.35);margin-top:1.2rem;font-style:normal;}
+    #csr-ring {
+      width: 28px;
+      height: 28px;
+      border: .5px solid rgba(201, 164, 92, .5);
+      border-radius: 50%;
+      transition: transform .5s var(--ease), opacity .4s;
+    }
 
-/* CLOSING */
-.about-closing{padding:5rem 0;border-top:.5px solid rgba(201,164,92,.1);text-align:center;}
-.about-closing p{font-family:var(--serif);font-style:italic;font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.55;color:rgba(245,241,234,.75);max-width:600px;margin:0 auto;}
+    #csr-dot {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
-/* RULE */
-.rule{display:flex;align-items:center;gap:2rem;margin-bottom:7rem;opacity:.2;}
-.rule-line{flex:1;height:.5px;background:var(--gold);}
-.rule-d{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);}
+    body:has(a:hover) #csr-ring {
+      transform: scale(2.1);
+      opacity: .25;
+    }
 
-/* FOOTER */
-footer{padding:5rem 4.5rem 3rem;text-align:center;border-top:.5px solid rgba(201,164,92,.08);background:linear-gradient(160deg,#0c0a06 0%,#0a0808 50%,#080606 100%);}
-.ft-logo{font-family:var(--serif);font-weight:300;font-size:2rem;letter-spacing:.45em;background:linear-gradient(135deg,#f0d880 0%,#c9a45c 40%,#a07030 70%,#d4b56a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:1.5rem;}
-.ft-tag{font-family:var(--serif);font-style:italic;font-size:.98rem;color:rgba(245,241,234,.38);letter-spacing:.1em;}
-.ft-copy{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,241,234,.15);margin-top:4rem;}
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 4.5rem;
+      transition: padding .4s, background .4s;
+      background: rgba(5, 5, 5, .97);
+      border-bottom: .5px solid rgba(201, 164, 92, .1);
+    }
 
-@media(max-width:768px){
-  .about-hero{padding:0 1.8rem 5rem;min-height:50vh;}
-  .about-body{padding:6rem 1.8rem 3rem;}
-  footer{padding:4rem 1.8rem 2.5rem;}
-}
-</style>
+    .nav-logo {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: .95rem;
+      letter-spacing: .45em;
+      background: linear-gradient(135deg, #f0d880 0%, #c9a45c 40%, #a07030 70%, #d4b56a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-mid {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-mid a {
+      font-size: .68rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: rgba(245, 241, 234, .65);
+      transition: color .35s;
+    }
+
+    .nav-mid a:hover,
+    .nav-mid a.active {
+      color: var(--gold);
+    }
+
+    @media(max-width:768px) {
+      .nav-mid {
+        display: none;
+      }
+
+      nav {
+        padding: 1.4rem 1.6rem;
+      }
+    }
+
+    /* HERO */
+    .about-hero {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 4.5rem 6rem;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #050505 0%, #0e0a06 50%, #120e08 80%, #0a0806 100%);
+    }
+
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 20% 80%, rgba(180, 140, 40, .12) 0%, transparent 65%), radial-gradient(ellipse 40% 50% at 80% 20%, rgba(90, 16, 32, .15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .about-hero-tag {
+      font-size: .62rem;
+      letter-spacing: .55em;
+      text-transform: uppercase;
+      color: rgba(201, 164, 92, .72);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .about-hero h1 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: .88;
+      letter-spacing: .04em;
+      background: linear-gradient(160deg, #ffffff 0%, #f5f0e8 30%, #f0e090 55%, #c9a45c 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .about-hero-sub {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: rgba(245, 241, 234, .45);
+      margin-top: 1.5rem;
+      letter-spacing: .06em;
+      position: relative;
+    }
+
+    /* SECTIONS */
+    .about-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 8rem 4.5rem 4rem;
+    }
+
+    .about-section {
+      margin-bottom: 7rem;
+    }
+
+    .about-section-label {
+      font-size: .62rem;
+      letter-spacing: .55em;
+      text-transform: uppercase;
+      color: rgba(201, 164, 92, .75);
+      display: block;
+      margin-bottom: 2.5rem;
+    }
+
+    .about-text {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+      line-height: 1.75;
+      color: rgba(245, 241, 234, .82);
+    }
+
+    .about-text p {
+      margin-bottom: 1.5em;
+    }
+
+    .about-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* PLACEHOLDER STYLING */
+    .placeholder {
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: .88rem;
+      letter-spacing: .04em;
+      line-height: 1.8;
+      color: rgba(201, 164, 92, .35);
+      border: .5px dashed rgba(201, 164, 92, .2);
+      padding: 2rem 2.5rem;
+      border-radius: 0;
+    }
+
+    .placeholder strong {
+      color: rgba(201, 164, 92, .6);
+      display: block;
+      margin-bottom: .8rem;
+      font-size: .7rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    /* PHILOSOPHY QUOTE */
+    .about-philosophy {
+      border-left: 1px solid rgba(201, 164, 92, .35);
+      padding-left: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .about-philosophy blockquote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1.3;
+      background: linear-gradient(135deg, #f5e090 0%, #c9a45c 45%, #8c6020 80%, #d4b56a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .about-philosophy cite {
+      display: block;
+      font-size: .65rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: rgba(245, 241, 234, .35);
+      margin-top: 1.2rem;
+      font-style: normal;
+    }
+
+    /* CLOSING */
+    .about-closing {
+      padding: 5rem 0;
+      border-top: .5px solid rgba(201, 164, 92, .1);
+      text-align: center;
+    }
+
+    .about-closing p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      line-height: 1.55;
+      color: rgba(245, 241, 234, .75);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* RULE */
+    .rule {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 7rem;
+      opacity: .2;
+    }
+
+    .rule-line {
+      flex: 1;
+      height: .5px;
+      background: var(--gold);
+    }
+
+    .rule-d {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 5rem 4.5rem 3rem;
+      text-align: center;
+      border-top: .5px solid rgba(201, 164, 92, .08);
+      background: linear-gradient(160deg, #0c0a06 0%, #0a0808 50%, #080606 100%);
+    }
+
+    .ft-logo {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 2rem;
+      letter-spacing: .45em;
+      background: linear-gradient(135deg, #f0d880 0%, #c9a45c 40%, #a07030 70%, #d4b56a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+
+    .ft-tag {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: .98rem;
+      color: rgba(245, 241, 234, .38);
+      letter-spacing: .1em;
+    }
+
+    .ft-copy {
+      font-size: .58rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(245, 241, 234, .15);
+      margin-top: 4rem;
+    }
+
+    @media(max-width:768px) {
+      .about-hero {
+        padding: 0 1.8rem 5rem;
+        min-height: 50vh;
+      }
+
+      .about-body {
+        padding: 6rem 1.8rem 3rem;
+      }
+
+      footer {
+        padding: 4rem 1.8rem 2.5rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div id="csr"><div id="csr-ring"></div><div id="csr-dot"></div></div>
+  <div id="csr">
+    <div id="csr-ring"></div>
+    <div id="csr-dot"></div>
+  </div>
 
-<nav>
-  <a href="quiereme.html" class="nav-logo">Quiéreme</a>
-  <ul class="nav-mid">
-    <li><a href="quiereme.html">Collections</a></li>
-    <li><a href="about.html" class="active">About</a></li>
-    <li><a href="journal.html">Journal</a></li>
-  </ul>
-</nav>
+  <nav>
+    <a href="quiereme.html" class="nav-logo">Quiéreme</a>
+    <ul class="nav-mid">
+      <li><a href="quiereme.html">Collections</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="journal.html">Journal</a></li>
+    </ul>
+  </nav>
 
-<section class="about-hero">
-  <span class="about-hero-tag">Quiéreme · The House</span>
-  <h1>The<br>House</h1>
-  <p class="about-hero-sub">On emotion, obsession, and the second skin you choose.</p>
-</section>
+  <section class="about-hero">
+    <span class="about-hero-tag">Quiéreme · The House</span>
+    <h1>The<br>House</h1>
+    <p class="about-hero-sub">On emotion, obsession, and the second skin you choose.</p>
+  </section>
 
-<div class="about-body">
+  <div class="about-body">
 
-  <!-- SECTION 1: THE ORIGIN -->
-  <section class="about-section">
-    <span class="about-section-label">The Origin</span>
-    <div class="about-text">
-      <p>There are feelings that arrive before you have words for them. I spent years looking for the right container — and found it wasn't a sentence. It was a scent. This began with an ache, persistent and quiet, that clung to the edges of memory like the scent of damp earth after a summer storm, mixed with the faint sweetness of night-blooming jasmine. It wasn't sadness, not quite nostalgia, but a sensation of wanting something so intensely it felt like a physical absence. A yearning for a version of comfort that was always just slightly out of reach, or a connection that felt profoundly understood but also fragile, fleeting. This feeling crystallized around certain people who moved through my life like ghosts, leaving trails of scents I couldn't quite grasp — old paper, cold stone, a specific type of incense — alongside the profound sense that something vital had passed without ever truly being held.</p>
-      <p>There were so many feelings that existed outside the easy categories, emotions that needed a home and deserved to feel as important as the good ones. I often felt like I was living in a monochrome world, constantly trying to force vibrant internal landscapes into flat, manageable concepts. The everyday language available to me offered no true container for the unspeakable. It demanded I dissect and define, when what I truly yearned for was simply to feel. This ache remained, a quiet hum beneath the surface, growing louder, more insistent, until the structures I'd built to understand my own inner life felt like a cage. This inability to fully honor the spectrum of emotion was precisely what pushed me towards scent.</p>
+    <!-- SECTION 1: THE ORIGIN -->
+    <section class="about-section">
+      <span class="about-section-label">The Origin</span>
+      <div class="about-text">
+        <p>There are feelings that arrive before you have words for them. I spent years looking for the right container
+          — and found it wasn't a sentence. It was a scent. This began with an ache, persistent and quiet, that clung to
+          the edges of memory like the scent of damp earth after a summer storm, mixed with the faint sweetness of
+          night-blooming jasmine. It wasn't sadness, not quite nostalgia, but a sensation of wanting something so
+          intensely it felt like a physical absence. A yearning for a version of comfort that was always just slightly
+          out of reach, or a connection that felt profoundly understood but also fragile, fleeting. This feeling
+          crystallized around certain people who moved through my life like ghosts, leaving trails of scents I couldn't
+          quite grasp — old paper, cold stone, a specific type of incense — alongside the profound sense that something
+          vital had passed without ever truly being held.</p>
+        <p>There were so many feelings that existed outside the easy categories, emotions that needed a home and
+          deserved to feel as important as the good ones. I often felt like I was living in a monochrome world,
+          constantly trying to force vibrant internal landscapes into flat, manageable concepts. The everyday language
+          available to me offered no true container for the unspeakable. It demanded I dissect and define, when what I
+          truly yearned for was simply to feel. This ache remained, a quiet hum beneath the surface, growing louder,
+          more insistent, until the structures I'd built to understand my own inner life felt like a cage. This
+          inability to fully honor the spectrum of emotion was precisely what pushed me towards scent.</p>
+      </div>
+    </section>
+
+    <div class="rule">
+      <div class="rule-line"></div>
+      <div class="rule-d"></div>
+      <div class="rule-line"></div>
     </div>
-  </section>
 
-  <div class="rule"><div class="rule-line"></div><div class="rule-d"></div><div class="rule-line"></div></div>
+    <!-- SECTION 2: THE PHILOSOPHY -->
+    <section class="about-section">
+      <span class="about-section-label">The Philosophy</span>
 
-  <!-- SECTION 2: THE PHILOSOPHY -->
-  <section class="about-section">
-    <span class="about-section-label">The Philosophy</span>
+      <div class="about-text">
+        <p>"Quiéreme tal y como soy" — <em>Love me just as I am.</em> This wasn't a slogan I invented for a brand; it
+          was a quiet prayer I needed to whisper to myself, a phrase that finally started to heal something. For years,
+          I edited myself, softened my edges, tried to become palatable, believing my authentic self was too much to be
+          loved, too messy, too intense. I needed to hear it from that younger version of myself, and then from the
+          parts of me that still, occasionally, flinch from judgment. This phrase is not a demand; it's an invitation,
+          an acceptance. It's permission to exist in all your difficult, contradictory truth. It's for anyone who has
+          ever felt like an excess, or a lack, in someone else's estimation. It's a whisper back to the parts of myself
+          I tried to hide, and a promise to honor them, fiercely.</p>
+      </div>
+    </section>
 
-    <div class="about-text">
-      <p>"Quiéreme tal y como soy" — <em>Love me just as I am.</em> This wasn't a slogan I invented for a brand; it was a quiet prayer I needed to whisper to myself, a phrase that finally started to heal something. For years, I edited myself, softened my edges, tried to become palatable, believing my authentic self was too much to be loved, too messy, too intense. I needed to hear it from that younger version of myself, and then from the parts of me that still, occasionally, flinch from judgment. This phrase is not a demand; it's an invitation, an acceptance. It's permission to exist in all your difficult, contradictory truth. It's for anyone who has ever felt like an excess, or a lack, in someone else's estimation. It's a whisper back to the parts of myself I tried to hide, and a promise to honor them, fiercely.</p>
+    <div class="rule">
+      <div class="rule-line"></div>
+      <div class="rule-d"></div>
+      <div class="rule-line"></div>
     </div>
-  </section>
 
-  <div class="rule"><div class="rule-line"></div><div class="rule-d"></div><div class="rule-line"></div></div>
+    <!-- SECTION 3: HOW WE WORK -->
+    <section class="about-section">
+      <span class="about-section-label">How We Work</span>
+      <div class="about-text">
+        <p>My creative process at Quiéreme doesn't begin with a list of notes; it begins with an emotion, raw and
+          undefined. Take <em>Ciegamente.</em> That fragrance didn't start with rum and tobacco. It started with the
+          feeling of a consuming, irrational obsession — the kind that makes you blind to everything else, a singular
+          focus bordering on madness. How does that feel in the body? A dizzying pull, a dark warmth, a sense of being
+          consumed. I immerse myself in that visceral experience, letting it guide me. Then, and only then, do I seek
+          out the olfactory echoes: the heady, almost aggressive sweetness of dark rum, the deep, earthy smoke of
+          tobacco, the intoxicating pull of patchouli. It's a reverse engineering of the soul, capturing the emotional
+          raw material first, then chasing down its aromatic shadow.</p>
+      </div>
+    </section>
 
-  <!-- SECTION 3: HOW WE WORK -->
-  <section class="about-section">
-    <span class="about-section-label">How We Work</span>
-    <div class="about-text">
-      <p>My creative process at Quiéreme doesn't begin with a list of notes; it begins with an emotion, raw and undefined. Take <em>Ciegamente.</em> That fragrance didn't start with rum and tobacco. It started with the feeling of a consuming, irrational obsession — the kind that makes you blind to everything else, a singular focus bordering on madness. How does that feel in the body? A dizzying pull, a dark warmth, a sense of being consumed. I immerse myself in that visceral experience, letting it guide me. Then, and only then, do I seek out the olfactory echoes: the heady, almost aggressive sweetness of dark rum, the deep, earthy smoke of tobacco, the intoxicating pull of patchouli. It's a reverse engineering of the soul, capturing the emotional raw material first, then chasing down its aromatic shadow.</p>
+    <div class="rule">
+      <div class="rule-line"></div>
+      <div class="rule-d"></div>
+      <div class="rule-line"></div>
     </div>
-  </section>
 
-  <div class="rule"><div class="rule-line"></div><div class="rule-d"></div><div class="rule-line"></div></div>
+    <!-- SECTION 4: CLOSING -->
+    <section class="about-closing">
+      <p>I want someone to put on a Quiéreme fragrance and recognise a part of themselves they hadn't given voice to.
+        Not to become someone else — but to be seen, fully, as who they already are.</p>
+      <p style="margin-top:1.5rem;">A mirror. A permission slip. A quiet, insistent whisper that you are enough, exactly
+        as you are, right now.</p>
+    </section>
 
-  <!-- SECTION 4: CLOSING -->
-  <section class="about-closing">
-    <p>I want someone to put on a Quiéreme fragrance and recognise a part of themselves they hadn't given voice to. Not to become someone else — but to be seen, fully, as who they already are.</p>
-    <p style="margin-top:1.5rem;">A mirror. A permission slip. A quiet, insistent whisper that you are enough, exactly as you are, right now.</p>
-  </section>
+  </div>
 
-</div>
+  <footer>
+    <span class="ft-logo">Quiéreme</span>
+    <p class="ft-tag">Quiéreme tal y como soy.</p>
+    <p class="ft-copy">© 2025 Quiéreme — Emotion as Fragrance. All rights reserved.</p>
+  </footer>
 
-<footer>
-  <span class="ft-logo">Quiéreme</span>
-  <p class="ft-tag">Quiéreme tal y como soy.</p>
-  <p class="ft-copy">© 2025 Quiéreme — Emotion as Fragrance. All rights reserved.</p>
-</footer>
-
-<script>
-const csr=document.getElementById('csr');
-let mx=window.innerWidth/2,my=window.innerHeight/2,cx=mx,cy=my;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-(function loop(){cx+=(mx-cx)*.13;cy+=(my-cy)*.13;csr.style.left=cx+'px';csr.style.top=cy+'px';requestAnimationFrame(loop);})();
-</script>
+  <script>
+    const csr = document.getElementById('csr');
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2, cx = mx, cy = my;
+    document.addEventListener('mousemove', e => {mx = e.clientX; my = e.clientY;});
+    (function loop() {cx += (mx - cx) * .13; cy += (my - cy) * .13; csr.style.left = cx + 'px'; csr.style.top = cy + 'px'; requestAnimationFrame(loop);})();
+  </script>
 </body>
+
 </html>
