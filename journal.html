@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiéreme — Journal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root{--black:#050505;--ivory:#F5F1EA;--gold:#C9A45C;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--ivory);font-family:var(--sans);font-weight:300;overflow-x:hidden;cursor:none;}
+a{color:inherit;text-decoration:none;}
+#csr{position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%);}
+#csr-ring{width:28px;height:28px;border:.5px solid rgba(201,164,92,.5);border-radius:50%;transition:transform .5s var(--ease),opacity .4s;}
+#csr-dot{position:absolute;width:4px;height:4px;background:var(--gold);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);}
+body:has(a:hover) #csr-ring{transform:scale(2.1);opacity:.25;}
+nav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:center;justify-content:space-between;padding:2rem 4.5rem;background:rgba(5,5,5,.97);border-bottom:.5px solid rgba(201,164,92,.1);}
+.nav-logo{font-family:var(--serif);font-weight:300;font-size:.95rem;letter-spacing:.45em;background:linear-gradient(135deg,#f0d880 0%,#c9a45c 40%,#a07030 70%,#d4b56a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-mid{display:flex;gap:2.5rem;list-style:none;}
+.nav-mid a{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,241,234,.65);transition:color .35s;}
+.nav-mid a:hover,.nav-mid a.active{color:var(--gold);}
+@media(max-width:768px){.nav-mid{display:none;}nav{padding:1.4rem 1.6rem;}}
+.journal-hero{min-height:55vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 4.5rem 6rem;position:relative;overflow:hidden;background:linear-gradient(180deg,#050505 0%,#0a0c10 50%,#060a0c 80%,#050505 100%);}
+.journal-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 80% 70%,rgba(15,50,70,.25) 0%,transparent 65%),radial-gradient(ellipse 40% 50% at 15% 30%,rgba(90,16,32,.15) 0%,transparent 60%);pointer-events:none;}
+.journal-hero-tag{font-size:.62rem;letter-spacing:.55em;text-transform:uppercase;color:rgba(201,164,92,.72);margin-bottom:2rem;position:relative;}
+.journal-hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(4rem,10vw,9rem);line-height:.88;letter-spacing:.04em;background:linear-gradient(160deg,#ffffff 0%,#f5f0e8 30%,#f0e090 55%,#c9a45c 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;}
+.journal-hero-sub{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:rgba(245,241,234,.45);margin-top:1.5rem;letter-spacing:.06em;position:relative;}
+.journal-grid{padding:7rem 4.5rem 8rem;display:grid;grid-template-columns:repeat(2,1fr);gap:2px;}
+@media(max-width:900px){.journal-grid{grid-template-columns:1fr;padding:5rem 1.8rem 6rem;}}
+.article-card{background:#0a0808;padding:3.5rem 3rem 3rem;position:relative;overflow:hidden;transition:background .4s;cursor:none;display:flex;flex-direction:column;}
+.article-card:hover{background:#0f0b0a;}
+.article-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .5s;pointer-events:none;}
+.card-rain::before{background:radial-gradient(ellipse at 80% 20%,rgba(15,60,50,.35) 0%,transparent 65%);}
+.card-mel::before{background:radial-gradient(ellipse at 20% 80%,rgba(160,80,90,.25) 0%,transparent 65%);}
+.card-night::before{background:radial-gradient(ellipse at 80% 80%,rgba(90,16,32,.35) 0%,transparent 65%);}
+.card-naked::before{background:radial-gradient(ellipse at 30% 30%,rgba(130,90,80,.2) 0%,transparent 65%);}
+.card-ano::before{background:radial-gradient(ellipse at 60% 30%,rgba(180,140,40,.22) 0%,transparent 65%);}
+.card-duelo::before{background:radial-gradient(ellipse at 30% 70%,rgba(180,180,200,.12) 0%,transparent 65%);}
+.article-card:hover::before{opacity:1;}
+.article-cat{font-size:.58rem;letter-spacing:.42em;text-transform:uppercase;color:rgba(201,164,92,.72);display:block;margin-bottom:1.5rem;}
+.article-num{position:absolute;top:3rem;right:3rem;font-family:var(--serif);font-size:4rem;font-weight:300;color:rgba(201,164,92,.06);line-height:1;pointer-events:none;}
+.article-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.15;color:var(--ivory);margin-bottom:1.2rem;transition:all .3s;flex-shrink:0;}
+.article-card:hover .article-title{background:linear-gradient(135deg,#f5e090 0%,#c9a45c 50%,#8c6020 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.article-excerpt{font-family:var(--serif);font-size:1rem;line-height:1.75;color:rgba(245,241,234,.62);margin-bottom:2.5rem;flex:1;}
+.article-meta{display:flex;align-items:center;justify-content:space-between;padding-top:1.8rem;border-top:.5px solid rgba(245,241,234,.07);margin-top:auto;}
+.article-date{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,241,234,.3);}
+.article-read{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,164,92,.65);display:flex;align-items:center;gap:.5rem;transition:color .3s;cursor:none;}
+.article-read::after{content:'';display:block;width:16px;height:.5px;background:currentColor;transition:width .35s;}
+.article-card:hover .article-read{color:var(--gold);}
+.article-card:hover .article-read::after{width:30px;}
+footer{padding:5rem 4.5rem 3rem;text-align:center;border-top:.5px solid rgba(201,164,92,.08);background:linear-gradient(160deg,#0c0a06 0%,#0a0808 50%,#080606 100%);}
+.ft-logo{font-family:var(--serif);font-weight:300;font-size:2rem;letter-spacing:.45em;background:linear-gradient(135deg,#f0d880 0%,#c9a45c 40%,#a07030 70%,#d4b56a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:1.5rem;}
+.ft-tag{font-family:var(--serif);font-style:italic;font-size:.98rem;color:rgba(245,241,234,.38);letter-spacing:.1em;}
+.ft-copy{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,241,234,.15);margin-top:4rem;}
+</style>
+</head>
+<body>
+<div id="csr"><div id="csr-ring"></div><div id="csr-dot"></div></div>
+<nav>
+  <a href="quiereme.html" class="nav-logo">Quiéreme</a>
+  <ul class="nav-mid">
+    <li><a href="quiereme.html">Collections</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="journal.html" class="active">Journal</a></li>
+  </ul>
+</nav>
+<section class="journal-hero">
+  <span class="journal-hero-tag">Quiéreme · Journal</span>
+  <h1>Journal</h1>
+  <p class="journal-hero-sub">Essays from the archive — on emotion, obsession, and the scents that hold them.</p>
+</section>
+<div class="journal-grid">
+
+  <a href="article.html?id=petricor" class="article-card card-rain">
+    <span class="article-num">01</span>
+    <span class="article-cat">Behind the Scent</span>
+    <h2 class="article-title">The Scent of Rain: Creating Petricor</h2>
+    <p class="article-excerpt">I wanted to make the exact smell of rain hitting dry earth — not a rain smell, but that specific smell. It's the scent of the world drawing a deep, cleansing breath, a moment of profound stillness before everything changes. For me, it holds a memory of elemental peace.</p>
+    <div class="article-meta"><span class="article-date">2025</span><span class="article-read">Read</span></div>
+  </a>
+
+  <a href="article.html?id=melancolia" class="article-card card-mel">
+    <span class="article-num">02</span>
+    <span class="article-cat">On Emotion</span>
+    <h2 class="article-title">Why Melancholy Smells Like Strawberries and Cream</h2>
+    <p class="article-excerpt">Melancholy isn't sadness. It's the ache of something beautiful that you know you can't hold onto. For Melancolía, I needed a scent that captured that bittersweet quality — a fleeting sweetness that highlights the underlying sorrow, like a cherished, innocent memory now tinged with the knowledge of loss.</p>
+    <div class="article-meta"><span class="article-date">2025</span><span class="article-read">Read</span></div>
+  </a>
+
+  <a href="article.html?id=night" class="article-card card-night">
+    <span class="article-num">03</span>
+    <span class="article-cat">Collection Notes</span>
+    <h2 class="article-title">On Darkness as Luxury: The Night Collection</h2>
+    <p class="article-excerpt">I didn't set out to make four dark fragrances. I set out to make four different kinds of night. Because darkness, unlike daylight, doesn't demand performance. It's where our truest, most honest selves often reside.</p>
+    <div class="article-meta"><span class="article-date">2025</span><span class="article-read">Read</span></div>
+  </a>
+
+  <a href="article.html?id=desnudo" class="article-card card-naked">
+    <span class="article-num">04</span>
+    <span class="article-cat">Personal</span>
+    <h2 class="article-title">What Vulnerability Smells Like: On Desnudo</h2>
+    <p class="article-excerpt">Desnudo is the fragrance I was most afraid to make. It's about that terrifying, exhilarating moment of stripping away all armor, all ego, all pretense, to stand utterly exposed and ask to be loved. It's the thing you'd only say in the dark, whispered softly but with absolute truth.</p>
+    <div class="article-meta"><span class="article-date">2025</span><span class="article-read">Read</span></div>
+  </a>
+
+  <a href="article.html?id=anoranza" class="article-card card-ano">
+    <span class="article-num">05</span>
+    <span class="article-cat">On Longing</span>
+    <h2 class="article-title">Añoranza: The Language of Longing</h2>
+    <p class="article-excerpt">Añoranza is the quiet thrum of a love that lives in memory, or across an impossible distance. It's the ache of a presence that isn't here, a phantom touch, a whispered name that still catches in your throat. This scent is built from that particular kind of longing.</p>
+    <div class="article-meta"><span class="article-date">2025</span><span class="article-read">Read</span></div>
+  </a>
+
+  <a href="article.html?id=duelo" class="article-card card-duelo">
+    <span class="article-num">06</span>
+    <span class="article-cat">On Grief</span>
+    <h2 class="article-title">Duelo: The Sacred Honor of Grief</h2>
+    <p class="article-excerpt">Duelo is not about succumbing to sadness; it's about the profound, heavy honor of continuing to love someone who is no longer here. It is the brave, beautiful act of holding onto absence — allowing grief to be not a weakness, but a powerful, sacred testament to enduring love.</p>
+    <div class="article-meta"><span class="article-date">2025</span><span class="article-read">Read</span></div>
+  </a>
+
+</div>
+<footer>
+  <span class="ft-logo">Quiéreme</span>
+  <p class="ft-tag">Quiéreme tal y como soy.</p>
+  <p class="ft-copy">© 2025 Quiéreme — Emotion as Fragrance. All rights reserved.</p>
+</footer>
+<script>
+const csr=document.getElementById('csr');
+let mx=window.innerWidth/2,my=window.innerHeight/2,cx=mx,cy=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){cx+=(mx-cx)*.13;cy+=(my-cy)*.13;csr.style.left=cx+'px';csr.style.top=cy+'px';requestAnimationFrame(loop);})();
+</script>
+</body>
+</html>
