@@ -1,165 +1,659 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiéreme — Journal</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
-<style>
-:root{--black:#050505;--ivory:#F5F1EA;--gold:#C9A45C;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--ivory);font-family:var(--sans);font-weight:300;overflow-x:hidden;cursor:none;}
-a{color:inherit;text-decoration:none;}
-#csr{position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%);}
-#csr-ring{width:28px;height:28px;border:.5px solid rgba(201,164,92,.5);border-radius:50%;transition:transform .5s var(--ease),opacity .4s;}
-#csr-dot{position:absolute;width:4px;height:4px;background:var(--gold);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);}
-body:has(a:hover) #csr-ring{transform:scale(2.1);opacity:.25;}
-nav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:center;justify-content:space-between;padding:2rem 4.5rem;background:rgba(5,5,5,.97);border-bottom:.5px solid rgba(201,164,92,.1);transition:padding .4s;}
-.nav-logo{font-family:var(--serif);font-weight:300;font-size:.95rem;letter-spacing:.45em;background:linear-gradient(135deg,#f0d880 0%,#c9a45c 40%,#a07030 70%,#d4b56a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.nav-mid{display:flex;gap:2.5rem;list-style:none;}
-.nav-mid a{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,241,234,.65);transition:color .35s;}
-.nav-mid a:hover,.nav-mid a.active{color:var(--gold);}
-@media(max-width:768px){.nav-mid{display:none;}nav{padding:1.4rem 1.6rem;}}
-.art-hero{min-height:60vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 4.5rem 6rem;position:relative;overflow:hidden;}
-.art-hero::before{content:'';position:absolute;inset:0;pointer-events:none;}
-.art-hero-tag{font-size:.62rem;letter-spacing:.55em;text-transform:uppercase;color:rgba(201,164,92,.72);margin-bottom:1.5rem;position:relative;z-index:1;}
-.art-hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.2rem,5.5vw,5.5rem);line-height:1.05;letter-spacing:.02em;background:linear-gradient(160deg,#ffffff 0%,#f5f0e8 30%,#f0e090 55%,#c9a45c 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;max-width:820px;position:relative;z-index:1;}
-.art-hero-date{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(245,241,234,.3);margin-top:2rem;position:relative;z-index:1;}
-.bg-rain{background:linear-gradient(180deg,#050505 0%,#040c0a 35%,#060e0c 60%,#050505 100%);}
-.bg-rain::before{background:radial-gradient(ellipse 60% 70% at 20% 70%,rgba(15,70,55,.4) 0%,transparent 65%);}
-.bg-mel{background:linear-gradient(180deg,#050505 0%,#0c0608 35%,#100a0e 60%,#050505 100%);}
-.bg-mel::before{background:radial-gradient(ellipse 60% 70% at 80% 60%,rgba(160,80,100,.3) 0%,transparent 65%);}
-.bg-night{background:linear-gradient(180deg,#050505 0%,#0e0306 35%,#180408 60%,#050505 100%);}
-.bg-night::before{background:radial-gradient(ellipse 60% 70% at 15% 65%,rgba(120,8,28,.45) 0%,transparent 65%);}
-.bg-naked{background:linear-gradient(180deg,#050505 0%,#0c0a08 35%,#100e0c 60%,#050505 100%);}
-.bg-naked::before{background:radial-gradient(ellipse 60% 70% at 65% 55%,rgba(130,90,80,.3) 0%,transparent 65%);}
-.bg-ano{background:linear-gradient(180deg,#050505 0%,#0e0c04 35%,#14100a 60%,#050505 100%);}
-.bg-ano::before{background:radial-gradient(ellipse 60% 70% at 50% 60%,rgba(180,140,40,.22) 0%,transparent 65%);}
-.bg-duelo{background:linear-gradient(180deg,#050505 0%,#080808 35%,#0c0c10 60%,#050505 100%);}
-.bg-duelo::before{background:radial-gradient(ellipse 60% 70% at 70% 55%,rgba(180,180,210,.1) 0%,transparent 65%);}
-.art-body{max-width:680px;margin:0 auto;padding:7rem 2rem 6rem;}
-.art-body p{font-family:var(--serif);font-weight:300;font-size:clamp(1.1rem,2.2vw,1.3rem);line-height:1.85;color:rgba(245,241,234,.82);margin-bottom:1.7em;}
-.art-body p:last-child{margin-bottom:0;}
-.art-body em{font-style:italic;color:rgba(245,241,234,.95);}
-.art-scent{margin:3rem 0;padding:2.5rem 0;border-top:.5px solid rgba(201,164,92,.15);}
-.art-scent-name{font-family:var(--serif);font-weight:300;font-size:1.8rem;line-height:1;background:linear-gradient(135deg,#f5e090 0%,#c9a45c 50%,#8c6020 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.3rem;}
-.art-scent-tr{font-family:var(--serif);font-style:italic;font-size:.82rem;color:rgba(201,164,92,.55);letter-spacing:.1em;margin-bottom:1rem;display:block;}
-.art-scent p{font-family:var(--serif);font-size:1.05rem;line-height:1.78;color:rgba(245,241,234,.7);margin-bottom:0;}
-.art-pullquote{font-family:var(--serif);font-style:italic;font-size:clamp(1.4rem,3vw,2rem);line-height:1.5;color:rgba(245,241,234,.78);border-left:1px solid rgba(201,164,92,.4);padding-left:2rem;margin:3.5rem 0;letter-spacing:.02em;}
-.art-footer-nav{padding:5rem 2rem;max-width:680px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;border-top:.5px solid rgba(201,164,92,.1);}
-.art-back{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,241,234,.45);display:flex;align-items:center;gap:.6rem;transition:color .3s;cursor:none;}
-.art-back::before{content:'';display:block;width:20px;height:.5px;background:currentColor;transition:width .3s;}
-.art-back:hover{color:var(--gold);}
-.art-back:hover::before{width:36px;}
-.art-frag-link{font-family:var(--serif);font-style:italic;font-size:1rem;color:rgba(201,164,92,.65);transition:color .3s;text-align:right;cursor:none;}
-.art-frag-link:hover{color:var(--gold);}
-.art-frag-link span{display:block;font-family:var(--sans);font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,241,234,.3);font-style:normal;margin-bottom:.3rem;}
-footer{padding:5rem 4.5rem 3rem;text-align:center;border-top:.5px solid rgba(201,164,92,.08);background:linear-gradient(160deg,#0c0a06 0%,#0a0808 50%,#080606 100%);}
-.ft-logo{font-family:var(--serif);font-weight:300;font-size:2rem;letter-spacing:.45em;background:linear-gradient(135deg,#f0d880 0%,#c9a45c 40%,#a07030 70%,#d4b56a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:1.5rem;}
-.ft-tag{font-family:var(--serif);font-style:italic;font-size:.98rem;color:rgba(245,241,234,.38);letter-spacing:.1em;}
-.ft-copy{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,241,234,.15);margin-top:4rem;}
-.art-content{display:none;}
-.art-content.active{display:block;}
-@media(max-width:768px){.art-hero{padding:0 1.8rem 5rem;min-height:50vh;}.art-body{padding:5rem 1.8rem 4rem;}.art-footer-nav{padding:3rem 1.8rem;flex-direction:column;gap:2rem;text-align:center;}.art-back::before{display:none;}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiéreme — Journal</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Inter:wght@200;300;400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --black: #050505;
+      --ivory: #F5F1EA;
+      --gold: #C9A45C;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --ease: cubic-bezier(.16, 1, .3, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--ivory);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #csr {
+      position: fixed;
+      z-index: 9999;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+    }
+
+    #csr-ring {
+      width: 28px;
+      height: 28px;
+      border: .5px solid rgba(201, 164, 92, .5);
+      border-radius: 50%;
+      transition: transform .5s var(--ease), opacity .4s;
+    }
+
+    #csr-dot {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    body:has(a:hover) #csr-ring {
+      transform: scale(2.1);
+      opacity: .25;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 4.5rem;
+      background: rgba(5, 5, 5, .97);
+      border-bottom: .5px solid rgba(201, 164, 92, .1);
+      transition: padding .4s;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: .95rem;
+      letter-spacing: .45em;
+      background: linear-gradient(135deg, #f0d880 0%, #c9a45c 40%, #a07030 70%, #d4b56a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-mid {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-mid a {
+      font-size: .68rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: rgba(245, 241, 234, .65);
+      transition: color .35s;
+    }
+
+    .nav-mid a:hover,
+    .nav-mid a.active {
+      color: var(--gold);
+    }
+
+    @media(max-width:768px) {
+      .nav-mid {
+        display: none;
+      }
+
+      nav {
+        padding: 1.4rem 1.6rem;
+      }
+    }
+
+    .art-hero {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 4.5rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .art-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .art-hero-tag {
+      font-size: .62rem;
+      letter-spacing: .55em;
+      text-transform: uppercase;
+      color: rgba(201, 164, 92, .72);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .art-hero h1 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2.2rem, 5.5vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: .02em;
+      background: linear-gradient(160deg, #ffffff 0%, #f5f0e8 30%, #f0e090 55%, #c9a45c 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      max-width: 820px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .art-hero-date {
+      font-size: .6rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: rgba(245, 241, 234, .3);
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bg-rain {
+      background: linear-gradient(180deg, #050505 0%, #040c0a 35%, #060e0c 60%, #050505 100%);
+    }
+
+    .bg-rain::before {
+      background: radial-gradient(ellipse 60% 70% at 20% 70%, rgba(15, 70, 55, .4) 0%, transparent 65%);
+    }
+
+    .bg-mel {
+      background: linear-gradient(180deg, #050505 0%, #0c0608 35%, #100a0e 60%, #050505 100%);
+    }
+
+    .bg-mel::before {
+      background: radial-gradient(ellipse 60% 70% at 80% 60%, rgba(160, 80, 100, .3) 0%, transparent 65%);
+    }
+
+    .bg-night {
+      background: linear-gradient(180deg, #050505 0%, #0e0306 35%, #180408 60%, #050505 100%);
+    }
+
+    .bg-night::before {
+      background: radial-gradient(ellipse 60% 70% at 15% 65%, rgba(120, 8, 28, .45) 0%, transparent 65%);
+    }
+
+    .bg-naked {
+      background: linear-gradient(180deg, #050505 0%, #0c0a08 35%, #100e0c 60%, #050505 100%);
+    }
+
+    .bg-naked::before {
+      background: radial-gradient(ellipse 60% 70% at 65% 55%, rgba(130, 90, 80, .3) 0%, transparent 65%);
+    }
+
+    .bg-ano {
+      background: linear-gradient(180deg, #050505 0%, #0e0c04 35%, #14100a 60%, #050505 100%);
+    }
+
+    .bg-ano::before {
+      background: radial-gradient(ellipse 60% 70% at 50% 60%, rgba(180, 140, 40, .22) 0%, transparent 65%);
+    }
+
+    .bg-duelo {
+      background: linear-gradient(180deg, #050505 0%, #080808 35%, #0c0c10 60%, #050505 100%);
+    }
+
+    .bg-duelo::before {
+      background: radial-gradient(ellipse 60% 70% at 70% 55%, rgba(180, 180, 210, .1) 0%, transparent 65%);
+    }
+
+    .art-body {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 7rem 2rem 6rem;
+    }
+
+    .art-body p {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+      line-height: 1.85;
+      color: rgba(245, 241, 234, .82);
+      margin-bottom: 1.7em;
+    }
+
+    .art-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .art-body em {
+      font-style: italic;
+      color: rgba(245, 241, 234, .95);
+    }
+
+    .art-scent {
+      margin: 3rem 0;
+      padding: 2.5rem 0;
+      border-top: .5px solid rgba(201, 164, 92, .15);
+    }
+
+    .art-scent-name {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 1.8rem;
+      line-height: 1;
+      background: linear-gradient(135deg, #f5e090 0%, #c9a45c 50%, #8c6020 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .3rem;
+    }
+
+    .art-scent-tr {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: .82rem;
+      color: rgba(201, 164, 92, .55);
+      letter-spacing: .1em;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .art-scent p {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      line-height: 1.78;
+      color: rgba(245, 241, 234, .7);
+      margin-bottom: 0;
+    }
+
+    .art-pullquote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      line-height: 1.5;
+      color: rgba(245, 241, 234, .78);
+      border-left: 1px solid rgba(201, 164, 92, .4);
+      padding-left: 2rem;
+      margin: 3.5rem 0;
+      letter-spacing: .02em;
+    }
+
+    .art-footer-nav {
+      padding: 5rem 2rem;
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: .5px solid rgba(201, 164, 92, .1);
+    }
+
+    .art-back {
+      font-size: .62rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: rgba(245, 241, 234, .45);
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      transition: color .3s;
+      cursor: none;
+    }
+
+    .art-back::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: .5px;
+      background: currentColor;
+      transition: width .3s;
+    }
+
+    .art-back:hover {
+      color: var(--gold);
+    }
+
+    .art-back:hover::before {
+      width: 36px;
+    }
+
+    .art-frag-link {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1rem;
+      color: rgba(201, 164, 92, .65);
+      transition: color .3s;
+      text-align: right;
+      cursor: none;
+    }
+
+    .art-frag-link:hover {
+      color: var(--gold);
+    }
+
+    .art-frag-link span {
+      display: block;
+      font-family: var(--sans);
+      font-size: .55rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: rgba(245, 241, 234, .3);
+      font-style: normal;
+      margin-bottom: .3rem;
+    }
+
+    footer {
+      padding: 5rem 4.5rem 3rem;
+      text-align: center;
+      border-top: .5px solid rgba(201, 164, 92, .08);
+      background: linear-gradient(160deg, #0c0a06 0%, #0a0808 50%, #080606 100%);
+    }
+
+    .ft-logo {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 2rem;
+      letter-spacing: .45em;
+      background: linear-gradient(135deg, #f0d880 0%, #c9a45c 40%, #a07030 70%, #d4b56a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+
+    .ft-tag {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: .98rem;
+      color: rgba(245, 241, 234, .38);
+      letter-spacing: .1em;
+    }
+
+    .ft-copy {
+      font-size: .58rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(245, 241, 234, .15);
+      margin-top: 4rem;
+    }
+
+    .art-content {
+      display: none;
+    }
+
+    .art-content.active {
+      display: block;
+    }
+
+    @media(max-width:768px) {
+      .art-hero {
+        padding: 0 1.8rem 5rem;
+        min-height: 50vh;
+      }
+
+      .art-body {
+        padding: 5rem 1.8rem 4rem;
+      }
+
+      .art-footer-nav {
+        padding: 3rem 1.8rem;
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .art-back::before {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div id="csr"><div id="csr-ring"></div><div id="csr-dot"></div></div>
-<nav>
-  <a href="index.html" class="nav-logo">Quiéreme</a>
-  <ul class="nav-mid">
-    <li><a href="index.html">Collections</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="journal.html" class="active">Journal</a></li>
-  </ul>
-</nav>
-
-<div class="art-content" id="art-petricor">
-  <div class="art-hero bg-rain"><span class="art-hero-tag">Behind the Scent · 01</span><h1>The Scent of Rain: Creating Petricor</h1><span class="art-hero-date">2025</span></div>
-  <div class="art-body">
-    <p>I wanted to make the exact smell of rain hitting dry earth — not a rain smell, but <em>that specific smell.</em> This isn't the vague, watery scent of a light drizzle, or the sharp ozone of a lightning strike. This is the rich, undeniable aroma that rises from the ground when the first heavy drops of a summer storm meet parched soil, a scent so particular it has its own scientific name: petrichor. For me, it holds a memory of elemental peace, of the world drawing a deep, cleansing breath.</p>
-    <div class="art-pullquote">The emotional pull of petrichor is rooted in cycles, in promises. It's the smell of life returning, of a thirst being quenched.</div>
-    <p>It reminds me of standing on my grandmother's porch as a child, watching the dust kick up on the gravel road just before the downpour hit, inhaling that first, raw, almost electric scent. There's an anticipation, a dramatic pause, then a profound release. It feels like the world is resetting, washing away the old and preparing for the new. That sensation — of quiet intensity and inevitable renewal — was what I aimed to capture.</p>
-    <p>To build Petricor, I started not with ingredients, but with the feeling of that moment: the cool dampness against skin, the rich earthiness, the hidden life stirring beneath. I worked backwards from that sensory memory. How do you smell the <em>cool?</em> With geosmin, that literal chemical signature of rain, and the crushed green of ivy leaves, wet and sharp. How do you find the <em>life</em> emerging? Through wet violet leaves and roses, just beginning to unfurl, their petals heavy with moisture. And the <em>grounding</em> sense of permanence? That's where the rich oakmoss, vetiver, and a cold, mineral musk come in, evoking wet stones and the deep, unmoving earth beneath it all. It's a scent designed to remind you that even after long dryness, the world always finds a way to bloom again.</p>
+  <div id="csr">
+    <div id="csr-ring"></div>
+    <div id="csr-dot"></div>
   </div>
-  <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html" class="art-frag-link"><span>Discover the fragrance</span>Petricor</a></div>
-</div>
+  <nav>
+    <a href="index.html" class="nav-logo">Quiéreme</a>
+    <ul class="nav-mid">
+      <li><a href="index.html">Collections</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="journal.html" class="active">Journal</a></li>
+    </ul>
+  </nav>
 
-<div class="art-content" id="art-melancolia">
-  <div class="art-hero bg-mel"><span class="art-hero-tag">On Emotion · 02</span><h1>Why Melancholy Smells Like Strawberries and Cream</h1><span class="art-hero-date">2025</span></div>
-  <div class="art-body">
-    <p>Melancholy isn't sadness. It's the ache of something beautiful that you know you can't hold onto. It's a quieter, more wistful emotion, a gentle sorrow for what was, or what might have been, rather than an active grief. For Melancolía, I needed a scent that captured that exact bittersweet quality — the exquisite pain of looking back at something pure and realizing it's gone forever, or that it was always destined to be fleeting.</p>
-    <div class="art-pullquote">The very beauty of that innocence makes the ache of its passing more profound.</div>
-    <p>This is why strawberries and cream felt so undeniably right. On the surface, it's an innocent combination: sweet, fresh, comforting, reminiscent of childhood summers or a simple, joyful indulgence. It represents a pristine, unblemished moment of happiness. But the paradox is that the very beauty of that innocence makes the ache of its passing more profound. It's not a dark, heavy sadness, but a delicate, almost tear-stained wistfulness. Imagine a perfect, sun-drenched afternoon, eating ripe strawberries with rich cream, knowing even as you savor each bite that the light will fade, the season will change, and this exact moment will never return. The sweetness makes the knowledge of its ephemerality sharper, more poignant.</p>
-    <p>So, Melancolía opens with the bright, realistic burst of wild strawberries and cold morning dew — the initial, vibrant memory. But that crisp fruitiness quickly softens, almost dissolving into a heavy, comforting heart of thick fresh cream and white vanilla powder. This is the comfort of memory, the beauty of what was. Yet, as it dries down, that sweetness becomes deeply somber, settling into a soft, velvety base of clean white musk and quiet cashmere wood. It's a gentle whisper of absence, a beautiful memory now wrapped in a quiet, weeping sadness. The innocence of the scent profile is precisely what allows the melancholic undertow to be felt so profoundly.</p>
+  <div class="art-content" id="art-petricor">
+    <div class="art-hero bg-rain"><span class="art-hero-tag">Behind the Scent · 01</span>
+      <h1>The Scent of Rain: Creating Petricor</h1><span class="art-hero-date">2025</span>
+    </div>
+    <div class="art-body">
+      <p>I wanted to make the exact smell of rain hitting dry earth — not a rain smell, but <em>that specific
+          smell.</em> This isn't the vague, watery scent of a light drizzle, or the sharp ozone of a lightning strike.
+        This is the rich, undeniable aroma that rises from the ground when the first heavy drops of a summer storm meet
+        parched soil, a scent so particular it has its own scientific name: petrichor. For me, it holds a memory of
+        elemental peace, of the world drawing a deep, cleansing breath.</p>
+      <div class="art-pullquote">The emotional pull of petrichor is rooted in cycles, in promises. It's the smell of
+        life returning, of a thirst being quenched.</div>
+      <p>It reminds me of standing on my grandmother's porch as a child, watching the dust kick up on the gravel road
+        just before the downpour hit, inhaling that first, raw, almost electric scent. There's an anticipation, a
+        dramatic pause, then a profound release. It feels like the world is resetting, washing away the old and
+        preparing for the new. That sensation — of quiet intensity and inevitable renewal — was what I aimed to capture.
+      </p>
+      <p>To build Petricor, I started not with ingredients, but with the feeling of that moment: the cool dampness
+        against skin, the rich earthiness, the hidden life stirring beneath. I worked backwards from that sensory
+        memory. How do you smell the <em>cool?</em> With geosmin, that literal chemical signature of rain, and the
+        crushed green of ivy leaves, wet and sharp. How do you find the <em>life</em> emerging? Through wet violet
+        leaves and roses, just beginning to unfurl, their petals heavy with moisture. And the <em>grounding</em> sense
+        of permanence? That's where the rich oakmoss, vetiver, and a cold, mineral musk come in, evoking wet stones and
+        the deep, unmoving earth beneath it all. It's a scent designed to remind you that even after long dryness, the
+        world always finds a way to bloom again.</p>
+    </div>
+    <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html"
+        class="art-frag-link"><span>Discover the fragrance</span>Petricor</a></div>
   </div>
-  <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html" class="art-frag-link"><span>Discover the fragrance</span>Melancolía</a></div>
-</div>
 
-<div class="art-content" id="art-night">
-  <div class="art-hero bg-night"><span class="art-hero-tag">Collection Notes · 03</span><h1>On Darkness as Luxury: The Night Collection</h1><span class="art-hero-date">2025</span></div>
-  <div class="art-body">
-    <p>I didn't set out to make four dark fragrances. I set out to make four different kinds of night. Night isn't a monolithic block of blackness; it's a spectrum of shadows, each holding its own specific emotional landscape. And darkness, unlike daylight, doesn't demand performance. It's where our truest, most honest selves often reside, revealing desires and intentions that daylight keeps hidden, cloaked in social expectation and the glare of scrutiny.</p>
-    <p>There is a profound luxury in darkness. It's not about absence, but about intensity. The textures are richer, the emotions deeper, the secrets more compelling. In the dark, we allow ourselves to be consumed by obsession, to wield hidden power, to explore profound mystery, or to flirt with delicious danger. These are the truths that live after the sun sets.</p>
-    <div class="art-scent"><p class="art-scent-name">Ciegamente</p><span class="art-scent-tr">Blindly</span><p>embodies the intoxicating tunnel vision of pure obsession. It's the scent of a love so intense it ignores all warnings, a beautiful madness that demands everything. Its warm rum, dark coffee, and rich leather speak to an addiction that is both luxurious and consuming.</p></div>
-    <div class="art-scent"><p class="art-scent-name">Terciopelo</p><span class="art-scent-tr">Velvet</span><p>is the essence of hidden power, of plush, royal authority. It's not loud, but profoundly deep and undeniably present. The metallic saffron, midnight orchid, and heavy oud wrap you in a cloak of smooth, untouchable intensity — a power that doesn't need to prove itself.</p></div>
-    <div class="art-scent"><p class="art-scent-name">Nocturna</p><span class="art-scent-tr">Nocturna</span><p>captures the sharp, sophisticated mystery of a historic city after midnight. It's the thrill of unknown encounters, the quiet secrets whispered in shadowed alleys. Smoked plum, church incense, and earthy patchouli create an atmosphere of elegance and intrigue — a darkness that is both inviting and unknowable.</p></div>
-    <div class="art-scent"><p class="art-scent-name">Veneno Dulce</p><span class="art-scent-tr">Sweet Poison</span><p>is the dangerous allure, the hypnotic pull of something that is both sweet and undeniably perilous. Wild berries, dark chocolate, and an animalic musk create a captivating contradiction — a sweetness with a lethal undertow.</p></div>
-    <div class="art-pullquote">These fragrances explore the facets of night — not as something to be feared, but as a space of profound honesty, where the self can shed its daylight armor and embrace its most intense, alluring truths.</div>
+  <div class="art-content" id="art-melancolia">
+    <div class="art-hero bg-mel"><span class="art-hero-tag">On Emotion · 02</span>
+      <h1>Why Melancholy Smells Like Strawberries and Cream</h1><span class="art-hero-date">2025</span>
+    </div>
+    <div class="art-body">
+      <p>Melancholy isn't sadness. It's the ache of something beautiful that you know you can't hold onto. It's a
+        quieter, more wistful emotion, a gentle sorrow for what was, or what might have been, rather than an active
+        grief. For Melancolía, I needed a scent that captured that exact bittersweet quality — the exquisite pain of
+        looking back at something pure and realizing it's gone forever, or that it was always destined to be fleeting.
+      </p>
+      <div class="art-pullquote">The very beauty of that innocence makes the ache of its passing more profound.</div>
+      <p>This is why strawberries and cream felt so undeniably right. On the surface, it's an innocent combination:
+        sweet, fresh, comforting, reminiscent of childhood summers or a simple, joyful indulgence. It represents a
+        pristine, unblemished moment of happiness. But the paradox is that the very beauty of that innocence makes the
+        ache of its passing more profound. It's not a dark, heavy sadness, but a delicate, almost tear-stained
+        wistfulness. Imagine a perfect, sun-drenched afternoon, eating ripe strawberries with rich cream, knowing even
+        as you savor each bite that the light will fade, the season will change, and this exact moment will never
+        return. The sweetness makes the knowledge of its ephemerality sharper, more poignant.</p>
+      <p>So, Melancolía opens with the bright, realistic burst of wild strawberries and cold morning dew — the initial,
+        vibrant memory. But that crisp fruitiness quickly softens, almost dissolving into a heavy, comforting heart of
+        thick fresh cream and white vanilla powder. This is the comfort of memory, the beauty of what was. Yet, as it
+        dries down, that sweetness becomes deeply somber, settling into a soft, velvety base of clean white musk and
+        quiet cashmere wood. It's a gentle whisper of absence, a beautiful memory now wrapped in a quiet, weeping
+        sadness. The innocence of the scent profile is precisely what allows the melancholic undertow to be felt so
+        profoundly.</p>
+    </div>
+    <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html"
+        class="art-frag-link"><span>Discover the fragrance</span>Melancolía</a></div>
   </div>
-  <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html" class="art-frag-link"><span>Explore the collection</span>The Night Collection</a></div>
-</div>
 
-<div class="art-content" id="art-desnudo">
-  <div class="art-hero bg-naked"><span class="art-hero-tag">Personal · 04</span><h1>What Vulnerability Smells Like: On Desnudo</h1><span class="art-hero-date">2025</span></div>
-  <div class="art-body">
-    <p>Desnudo is the fragrance I was most afraid to make. Not because it was technically difficult, but because it demanded a level of honesty from me that felt exposed. It's about that terrifying, exhilarating moment of stripping away all armor, all ego, all pretense, to stand utterly bare before the person you love, asking to be accepted exactly as you are. It's the ultimate act of vulnerability — an emotional nakedness that feels both terrifying and liberating.</p>
-    <div class="art-pullquote">Being truly naked isn't about physical form. It's about the soul.</div>
-    <p>It's about letting go of the curated version of yourself you present to the world. It means showing the flaws, the fears, the parts that are still uncertain, and trusting that they will be met with tenderness, not judgment. What does that feel like? A soft flush, a racing heart, a quiet breath held, then finally released. It's the profound courage of saying, "This is me. All of it. Will you still love me?" It's the thing you'd only say in the dark, whispered softly but with absolute truth, hoping the answer will be yes.</p>
-    <p>To translate this into scent, I began with the sensation of warmth and softness against skin, but also the delicate tremble of fear. The clean opening of white cotton blossom and a whisper of pink pepper mimics that subtle heat, that quiet flush. Then, a beautiful, clean-yet-warm animalic musk emerges, blending with powdery pale iris and soft suede. This isn't a harsh, aggressive musk; it's the smell of human skin itself, intimate and raw. Desnudo dries down into a comforting base of warm ambergris, white cedarwood, and a lactonic skin musk — a blend that feels like a warm embrace, a whisper of acceptance against your skin. It is the scent of finally allowing yourself to be seen, fully, and finding peace in that truth.</p>
+  <div class="art-content" id="art-night">
+    <div class="art-hero bg-night"><span class="art-hero-tag">Collection Notes · 03</span>
+      <h1>On Darkness as Luxury: The Night Collection</h1><span class="art-hero-date">2025</span>
+    </div>
+    <div class="art-body">
+      <p>I didn't set out to make four dark fragrances. I set out to make four different kinds of night. Night isn't a
+        monolithic block of blackness; it's a spectrum of shadows, each holding its own specific emotional landscape.
+        And darkness, unlike daylight, doesn't demand performance. It's where our truest, most honest selves often
+        reside, revealing desires and intentions that daylight keeps hidden, cloaked in social expectation and the glare
+        of scrutiny.</p>
+      <p>There is a profound luxury in darkness. It's not about absence, but about intensity. The textures are richer,
+        the emotions deeper, the secrets more compelling. In the dark, we allow ourselves to be consumed by obsession,
+        to wield hidden power, to explore profound mystery, or to flirt with delicious danger. These are the truths that
+        live after the sun sets.</p>
+      <div class="art-scent">
+        <p class="art-scent-name">Ciegamente</p><span class="art-scent-tr">Blindly</span>
+        <p>embodies the intoxicating tunnel vision of pure obsession. It's the scent of a love so intense it ignores all
+          warnings, a beautiful madness that demands everything. Its warm rum, dark coffee, and rich leather speak to an
+          addiction that is both luxurious and consuming.</p>
+      </div>
+      <div class="art-scent">
+        <p class="art-scent-name">Terciopelo</p><span class="art-scent-tr">Velvet</span>
+        <p>is the essence of hidden power, of plush, royal authority. It's not loud, but profoundly deep and undeniably
+          present. The metallic saffron, midnight orchid, and heavy oud wrap you in a cloak of smooth, untouchable
+          intensity — a power that doesn't need to prove itself.</p>
+      </div>
+      <div class="art-scent">
+        <p class="art-scent-name">Nocturna</p><span class="art-scent-tr">Nocturna</span>
+        <p>captures the sharp, sophisticated mystery of a historic city after midnight. It's the thrill of unknown
+          encounters, the quiet secrets whispered in shadowed alleys. Smoked plum, church incense, and earthy patchouli
+          create an atmosphere of elegance and intrigue — a darkness that is both inviting and unknowable.</p>
+      </div>
+      <div class="art-scent">
+        <p class="art-scent-name">Veneno Dulce</p><span class="art-scent-tr">Sweet Poison</span>
+        <p>is the dangerous allure, the hypnotic pull of something that is both sweet and undeniably perilous. Wild
+          berries, dark chocolate, and an animalic musk create a captivating contradiction — a sweetness with a lethal
+          undertow.</p>
+      </div>
+      <div class="art-pullquote">These fragrances explore the facets of night — not as something to be feared, but as a
+        space of profound honesty, where the self can shed its daylight armor and embrace its most intense, alluring
+        truths.</div>
+    </div>
+    <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html"
+        class="art-frag-link"><span>Explore the collection</span>The Night Collection</a></div>
   </div>
-  <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html" class="art-frag-link"><span>Discover the fragrance</span>Desnudo</a></div>
-</div>
 
-<div class="art-content" id="art-anoranza">
-  <div class="art-hero bg-ano"><span class="art-hero-tag">On Longing · 05</span><h1>Añoranza: The Language of Longing</h1><span class="art-hero-date">2025</span></div>
-  <div class="art-body">
-    <p>Añoranza is the quiet thrum of a love that lives in memory, or across an impossible distance. It's the ache of a presence that isn't here, a phantom touch, a whispered name that still catches in your throat. This isn't the sharp pain of loss, but the persistent, tender pull of something you can't quite reach — a connection that remains vital despite separation. It's the profound, almost physical sensation of missing someone so deeply that it shapes your present.</p>
-    <div class="art-pullquote">Yearning is a subtle, rich emotion. It isn't loud; it's intimate — a quiet conversation with an imagined past or a distant future.</div>
-    <p>It can be comforting in its familiarity, a testament to the depth of what was, or what still is, in your heart. I remember a feeling that would hit me, out of nowhere, usually in quiet moments — the scent of old wood, or a specific kind of bread baking — and suddenly I'd be transported to a memory, a person, a feeling that was undeniably real but now intangible. That ache, both sweet and sharp, was the core I wanted to capture.</p>
-    <p>To create Añoranza, I chose a nutty, warm profile because it evokes comfort and a sense of shared intimacy, like warmth radiating from a cherished, absent person. The opening of toasted pistachio and warm milk powder is soft, enveloping, reminiscent of gentle memories. This initial sweetness deepens into a bittersweet roasted hazelnut accord mixed with delicate heliotrope, mirroring how a beautiful memory can turn poignant with the knowledge of distance. It settles into a soft, aching base of skin musk, salted caramel, and fine cashmere — designed to smell like a borrowed sweater, the lingering scent of someone you miss pressed close to your skin. Añoranza is for those moments when your heart lives in two places at once.</p>
+  <div class="art-content" id="art-desnudo">
+    <div class="art-hero bg-naked"><span class="art-hero-tag">Personal · 04</span>
+      <h1>What Vulnerability Smells Like: On Desnudo</h1><span class="art-hero-date">2025</span>
+    </div>
+    <div class="art-body">
+      <p>Desnudo is the fragrance I was most afraid to make. Not because it was technically difficult, but because it
+        demanded a level of honesty from me that felt exposed. It's about that terrifying, exhilarating moment of
+        stripping away all armor, all ego, all pretense, to stand utterly bare before the person you love, asking to be
+        accepted exactly as you are. It's the ultimate act of vulnerability — an emotional nakedness that feels both
+        terrifying and liberating.</p>
+      <div class="art-pullquote">Being truly naked isn't about physical form. It's about the soul.</div>
+      <p>It's about letting go of the curated version of yourself you present to the world. It means showing the flaws,
+        the fears, the parts that are still uncertain, and trusting that they will be met with tenderness, not judgment.
+        What does that feel like? A soft flush, a racing heart, a quiet breath held, then finally released. It's the
+        profound courage of saying, "This is me. All of it. Will you still love me?" It's the thing you'd only say in
+        the dark, whispered softly but with absolute truth, hoping the answer will be yes.</p>
+      <p>To translate this into scent, I began with the sensation of warmth and softness against skin, but also the
+        delicate tremble of fear. The clean opening of white cotton blossom and a whisper of pink pepper mimics that
+        subtle heat, that quiet flush. Then, a beautiful, clean-yet-warm animalic musk emerges, blending with powdery
+        pale iris and soft suede. This isn't a harsh, aggressive musk; it's the smell of human skin itself, intimate and
+        raw. Desnudo dries down into a comforting base of warm ambergris, white cedarwood, and a lactonic skin musk — a
+        blend that feels like a warm embrace, a whisper of acceptance against your skin. It is the scent of finally
+        allowing yourself to be seen, fully, and finding peace in that truth.</p>
+    </div>
+    <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html"
+        class="art-frag-link"><span>Discover the fragrance</span>Desnudo</a></div>
   </div>
-  <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html" class="art-frag-link"><span>Discover the fragrance</span>Añoranza</a></div>
-</div>
 
-<div class="art-content" id="art-duelo">
-  <div class="art-hero bg-duelo"><span class="art-hero-tag">On Grief · 06</span><h1>Duelo: The Sacred Honor of Grief</h1><span class="art-hero-date">2025</span></div>
-  <div class="art-body">
-    <p>Duelo is not about succumbing to sadness; it's about the profound, heavy honor of continuing to love someone who is no longer here. This is a different kind of sorrow than melancholy. It is deeper, more structural — the weight of a world irrevocably changed. It is the brave, beautiful act of holding onto absence, allowing grief to be not a weakness, but a powerful, sacred testament to enduring love.</p>
-    <div class="art-pullquote">The pain is a measure of the love. To diminish the pain would be to diminish the love itself.</div>
-    <p>When I thought about Duelo, I wasn't just thinking of tears, but of the way love leaves its imprint, indelible and profound. It's the ritual of remembrance, the private moments of reflection, the quiet conversations you continue to have with someone who exists now only in your heart. There's a certain catharsis in allowing that depth of feeling to exist, unedited, untamed.</p>
-    <p>To translate this, I began with a cold, sharp opening of metallic rain and crushed white lilies — the stark reality of loss, the raw shock. But from that coldness, a velvet, dark, narcotic night-blooming jasmine and bleeding red rose accord emerges. This represents a love that refuses to fade, a heart still blooming in the face of desolation, vivid and undeniable. The heavy floral notes then dry down into a grounding base of damp earth, cold marble, and a whisper of sacred frankincense — notes that speak to permanence, but also to a hallowed space, a memory held in reverence. Duelo is a scent for the beautiful, difficult journey of loving through grief.</p>
+  <div class="art-content" id="art-anoranza">
+    <div class="art-hero bg-ano"><span class="art-hero-tag">On Longing · 05</span>
+      <h1>Añoranza: The Language of Longing</h1><span class="art-hero-date">2025</span>
+    </div>
+    <div class="art-body">
+      <p>Añoranza is the quiet thrum of a love that lives in memory, or across an impossible distance. It's the ache of
+        a presence that isn't here, a phantom touch, a whispered name that still catches in your throat. This isn't the
+        sharp pain of loss, but the persistent, tender pull of something you can't quite reach — a connection that
+        remains vital despite separation. It's the profound, almost physical sensation of missing someone so deeply that
+        it shapes your present.</p>
+      <div class="art-pullquote">Yearning is a subtle, rich emotion. It isn't loud; it's intimate — a quiet conversation
+        with an imagined past or a distant future.</div>
+      <p>It can be comforting in its familiarity, a testament to the depth of what was, or what still is, in your heart.
+        I remember a feeling that would hit me, out of nowhere, usually in quiet moments — the scent of old wood, or a
+        specific kind of bread baking — and suddenly I'd be transported to a memory, a person, a feeling that was
+        undeniably real but now intangible. That ache, both sweet and sharp, was the core I wanted to capture.</p>
+      <p>To create Añoranza, I chose a nutty, warm profile because it evokes comfort and a sense of shared intimacy,
+        like warmth radiating from a cherished, absent person. The opening of toasted pistachio and warm milk powder is
+        soft, enveloping, reminiscent of gentle memories. This initial sweetness deepens into a bittersweet roasted
+        hazelnut accord mixed with delicate heliotrope, mirroring how a beautiful memory can turn poignant with the
+        knowledge of distance. It settles into a soft, aching base of skin musk, salted caramel, and fine cashmere —
+        designed to smell like a borrowed sweater, the lingering scent of someone you miss pressed close to your skin.
+        Añoranza is for those moments when your heart lives in two places at once.</p>
+    </div>
+    <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html"
+        class="art-frag-link"><span>Discover the fragrance</span>Añoranza</a></div>
   </div>
-  <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html" class="art-frag-link"><span>Discover the fragrance</span>Duelo</a></div>
-</div>
 
-<footer>
-  <span class="ft-logo">Quiéreme</span>
-  <p class="ft-tag">Quiéreme tal y como soy.</p>
-  <p class="ft-copy">© 2025 Quiéreme — Emotion as Fragrance. All rights reserved.</p>
-</footer>
+  <div class="art-content" id="art-duelo">
+    <div class="art-hero bg-duelo"><span class="art-hero-tag">On Grief · 06</span>
+      <h1>Duelo: The Sacred Honor of Grief</h1><span class="art-hero-date">2025</span>
+    </div>
+    <div class="art-body">
+      <p>Duelo is not about succumbing to sadness; it's about the profound, heavy honor of continuing to love someone
+        who is no longer here. This is a different kind of sorrow than melancholy. It is deeper, more structural — the
+        weight of a world irrevocably changed. It is the brave, beautiful act of holding onto absence, allowing grief to
+        be not a weakness, but a powerful, sacred testament to enduring love.</p>
+      <div class="art-pullquote">The pain is a measure of the love. To diminish the pain would be to diminish the love
+        itself.</div>
+      <p>When I thought about Duelo, I wasn't just thinking of tears, but of the way love leaves its imprint, indelible
+        and profound. It's the ritual of remembrance, the private moments of reflection, the quiet conversations you
+        continue to have with someone who exists now only in your heart. There's a certain catharsis in allowing that
+        depth of feeling to exist, unedited, untamed.</p>
+      <p>To translate this, I began with a cold, sharp opening of metallic rain and crushed white lilies — the stark
+        reality of loss, the raw shock. But from that coldness, a velvet, dark, narcotic night-blooming jasmine and
+        bleeding red rose accord emerges. This represents a love that refuses to fade, a heart still blooming in the
+        face of desolation, vivid and undeniable. The heavy floral notes then dry down into a grounding base of damp
+        earth, cold marble, and a whisper of sacred frankincense — notes that speak to permanence, but also to a
+        hallowed space, a memory held in reverence. Duelo is a scent for the beautiful, difficult journey of loving
+        through grief.</p>
+    </div>
+    <div class="art-footer-nav"><a href="journal.html" class="art-back">Back to Journal</a><a href="index.html"
+        class="art-frag-link"><span>Discover the fragrance</span>Duelo</a></div>
+  </div>
 
-<script>
-const csr=document.getElementById('csr');
-let mx=window.innerWidth/2,my=window.innerHeight/2,cx=mx,cy=my;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-(function loop(){cx+=(mx-cx)*.13;cy+=(my-cy)*.13;csr.style.left=cx+'px';csr.style.top=cy+'px';requestAnimationFrame(loop);})();
-const id=new URLSearchParams(window.location.search).get('id')||'petricor';
-const target=document.getElementById('art-'+id);
-if(target){target.classList.add('active');document.title='Quiéreme — '+target.querySelector('h1').textContent;}
-else{document.getElementById('art-petricor').classList.add('active');}
-window.addEventListener('scroll',()=>{document.querySelector('nav').style.padding=scrollY>60?'1rem 4.5rem':'2rem 4.5rem';},{passive:true});
-</script>
+  <footer>
+    <span class="ft-logo">Quiéreme</span>
+    <p class="ft-tag">Quiéreme tal y como soy.</p>
+    <p class="ft-copy">© 2025 Quiéreme — Emotion as Fragrance. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const csr = document.getElementById('csr');
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2, cx = mx, cy = my;
+    document.addEventListener('mousemove', e => {mx = e.clientX; my = e.clientY;});
+    (function loop() {cx += (mx - cx) * .13; cy += (my - cy) * .13; csr.style.left = cx + 'px'; csr.style.top = cy + 'px'; requestAnimationFrame(loop);})();
+    const id = new URLSearchParams(window.location.search).get('id') || 'petricor';
+    const target = document.getElementById('art-' + id);
+    if (target) {target.classList.add('active'); document.title = 'Quiéreme — ' + target.querySelector('h1').textContent;}
+    else {document.getElementById('art-petricor').classList.add('active');}
+    window.addEventListener('scroll', () => {document.querySelector('nav').style.padding = scrollY > 60 ? '1rem 4.5rem' : '2rem 4.5rem';}, {passive: true});
+  </script>
 </body>
+
 </html>
