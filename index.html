@@ -439,7 +439,7 @@ function initHero(){
   document.getElementById('hctr').textContent=f.n+' / 27';
   startParticles(f.acc);
   var bot=document.getElementById('hbottle'),bimg=document.getElementById('hbimg');
-  if(f.img){bimg.src=f.img;bimg.alt=f.name;bot.classList.add('show');}else{bot.classList.remove('show');bimg.src='';}
+  if(f.img){bimg.src=f.img;bimg.alt=f.name;bimg.style.objectPosition=IMG_POS[f.id]||'center bottom';bot.classList.add('show');}else{bot.classList.remove('show');bimg.src='';}
   var b1=document.getElementById('hblob1'),b2=document.getElementById('hblob2');
   if(b1){b1.style.background=f.acc;}
   if(b2){b2.style.background=f.acc+'88';}
@@ -471,7 +471,7 @@ function initHoverPreview(){
   var preview=document.getElementById('img-preview'),pimg=preview.querySelector('img'),visible=false;
   document.querySelectorAll('.fe').forEach(function(el){
     var id=el.dataset.id,f=FRAGS.find(function(x){return x.id===id;});if(!f||!f.img)return;
-    el.addEventListener('mouseenter',function(){pimg.src=f.img;preview.style.opacity='1';visible=true;});
+    el.addEventListener('mouseenter',function(){pimg.src=f.img;pimg.style.objectPosition=IMG_POS[f.id]||'center center';preview.style.opacity='1';visible=true;});
     el.addEventListener('mouseleave',function(){preview.style.opacity='0';visible=false;});
     el.addEventListener('mousemove',function(e){if(!visible)return;var x=e.clientX+24,y=e.clientY-130;if(x+210>window.innerWidth)x=e.clientX-234;if(y<10)y=10;if(y+270>window.innerHeight)y=window.innerHeight-280;preview.style.left=x+'px';preview.style.top=y+'px';});
   });
